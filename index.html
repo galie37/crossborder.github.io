@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="#" type="image/icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="#">
+    <title>『Vivy-Fluorite Eye's Song-』</title>
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Lato', sans-serif; /* 统一字体 */
+        }
+        body {
+            font-family: 'Lato', sans-serif;
+            color: #333;
+            position: relative;
+            text-align: center;
+            background-image: url(../source/img/bg1.jpg);
+            background-size: cover;
+            background-position: top;
+            background-repeat: no-repeat;
+            min-height: 100vh; /* 确保背景覆盖整个视口 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 80px; /* 为固定导航栏留出空间 */
+            overflow-x: hidden; /* 隐藏水平滚动条 */
+        }
+        h1, h2, h3, p {
+            letter-spacing: 1px;
+            line-height: 1.5; /* 增加行高，提升阅读性 */
+        }
+        h1 {
+            font-weight: 300;
+            font-size: 40px;
+        }
+        h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        p {
+            font-size: 18px; /* 调整段落字体大小 */
+            color: #eee; /* 浅色文字，在深色背景下更清晰 */
+        }
+
+        /* --- 导航栏样式 --- */
+        .main-nav {
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.3); /* 导航栏半透明黑色背景 */
+            color: white;
+            padding: 15px 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            backdrop-filter: blur(5px); /* 导航栏模糊效果 */
+            -webkit-backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease; /* 添加过渡效果 */
+        }
+        .main-nav:hover {
+            background-color: rgba(0, 0, 0, 0.5); /* 鼠标悬停时背景加深 */
+        }
+        .nav-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-left {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white; /* 确保文字颜色 */
+        }
+        .nav-left h1 {
+            margin:0;
+            font-size:24px;
+            color: white; /* 确保site-name文字颜色 */
+            letter-spacing:0.6px;
+        }
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            margin-right: 15px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .site-name {
+            font-size: 28px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-right a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            margin-left: 30px;
+            transition: color 0.3s ease;
+            position: relative; /* 为下划线效果准备 */
+        }
+        .nav-right a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            display: block;
+            margin: auto;
+            bottom: 0;
+            right: 0;
+            background: white;
+            transition: width .3s ease;
+        }
+        .nav-right a:hover {
+            color: #ddd;
+            text-decoration: none;
+        }
+        .nav-right a:hover::after {
+            width: 100%;
+            left: 0;
+            right: auto;
+            background: white;
+        }
+
+        /* --- 页面主要内容区域 --- */
+        .main-content {
+            width: 100%;
+            max-width: 1200px; /* 限制内容最大宽度 */
+            margin: 20px auto 0 auto; /* 顶部留白 */
+            display: grid;
+            grid-template-columns: 1.5fr 1fr; /* 左侧1.5份，右侧1份 */
+            grid-template-rows: auto auto auto; /* 行高自适应 */
+            gap: 20px; /* 网格间隙 */
+            padding: 0 20px; /* 左右内边距 */
+            z-index: 10; /* 确保在背景之上 */
+            align-items: start; /* 顶部对齐 */
+            flex-grow: 1;
+        }
+
+        /* 通用栏目样式 */
+        .content-section {
+            background-color: rgba(0, 0, 0, 0.3); /* 栏目半透明黑色背景 */
+            backdrop-filter: blur(7px); /* 栏目模糊效果 */
+            -webkit-backdrop-filter: blur(7px);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 30px;
+            color: #eee; /* 调整文字颜色，使其更易读 */
+            text-align: left; /* 内容左对齐 */
+
+            opacity: 0; /* 初始隐藏 */
+            transform: translateY(50px); /* 初始向下偏移 */
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        /* 角色台词 - 导航栏下方，占据一行 */
+        .role-dialogue {
+            grid-column: 1 / -1; /* 占据所有列 */
+            grid-row: 1;       /* 第一行 */
+            text-align: center; /* 台词内容可以居中 */
+        }
+
+        /* 角色经历 - 左侧 */
+        .role-experience {
+            grid-column: 1; /* 第一列 */
+            grid-row: 2/3; /* 第二行 */
+            /* 宽度已通过 grid-template-columns 调整 */
+        }
+        .role-experience h2 {
+            text-align: center; /* 标题居中 */
+        }
+        .role-experience p, .role-experience ul {
+            margin-top: 15px;
+        }
+        .role-experience ul {
+            list-style: disc inside;
+            margin-left: 20px;
+        }
+        .role-experience img {
+            display: block; /* 图片块级显示 */
+            max-width: 100%;
+            height: auto;
+            margin: 20px auto; /* 图片居中 */
+            border-radius: 5px; /* 图片圆角 */
+        }
+
+        /* 角色资料 - 右侧上方 */
+        .role-profile {
+            grid-column: 2; /* 第二列 */
+            grid-row: 2; /* 第二行 */
+            /* 宽度已通过 grid-template-columns 调整 */
+        }
+        .role-profile h2 {
+            text-align: center; /* 标题居中 */
+        }
+        .role-profile p {
+            margin-bottom: 10px;
+        }
+        .role-profile img {
+            display: block;
+            max-width: 100%; /* 注意: 如果资料栏目不想要图，删除这里 */
+            height: auto;
+            margin: 15px auto;
+            border-radius: 5px;
+        }
+
+
+        /* 角色画廊 - 右侧下方 */
+        .role-gallery {
+            grid-column: 3/-3; /* 第二列 */
+            grid-row: 3;    /* 第三行 */
+            /* 宽度已通过 grid-template-columns 调整 */
+        }
+        .role-gallery h2 {
+            text-align: center; /* 标题居中 */
+        }
+        .gallery-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* 图片自适应多列 */
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .gallery-images img {
+            display: block;
+            width: 100%;
+            height: auto;
+            object-fit: cover; /* 保证图片填充容器 */
+            border-radius: 5px;
+            aspect-ratio: 16 / 9; /* 保持图片的宽高比 */
+        }
+
+        /* --- 激活状态 --- */
+        .fade-and-slide-in {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+        /*文末寄语*/
+        .role-text {
+            grid-column: 1/-1; 
+            grid-row: 4;       
+            text-align: center; 
+        }
+        /* 调整响应式 */
+        @media (max-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr; /* 在小屏幕上改为单列布局 */
+                grid-template-rows: auto auto auto auto; /* 行定义相应调整 */
+                gap: 15px; /* 减小间隙 */
+            }
+            .role-dialogue, .role-experience, .role-profile, .role-gallery {
+                grid-column: 1 / -1; /* 全部占据单列 */
+                grid-row: auto; /* 行自动排列 */
+                padding: 20px; /* 减小内边距 */
+            }
+            .gallery-images {
+                grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); /* 小屏幕图片列数调整 */
+            }
+        }
+        @media (max-width: 768px) {
+             .main-nav {
+                padding: 10px 20px;
+            }
+            .site-name {
+                font-size: 24px;
+            }
+            .nav-right a {
+                font-size: 16px;
+                margin-left: 20px;
+            }
+             .main-content {
+                margin-top: 10px; /* 调整顶部边距 */
+            }
+            h1 {
+                font-size: 30px; /* 调整主标题字号 */
+            }
+            h2 {
+                font-size: 26px;
+            }
+             h3 {
+                font-size: 20px;
+            }
+        }
+                /* --- 底部页脚样式 --- */
+        .footer-placeholder {
+            height: 80px; /* 留出音乐按钮的空间 */
+        }
+        .site-footer {
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.4); /* 页脚背景 */
+            color: #ccc; /* 页脚文字颜色 */
+            padding: 30px 20px;
+            margin-top: 40px; /* 与主内容区的间距 */
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
+            text-align: center;
+            font-size: 16px;
+            position: relative; /* 确保内容不会被音乐按钮遮挡 */
+            z-index: 1; /* 放置在内容之上 */
+        }
+        .site-footer p {
+            margin: 0;
+            color: #ccc; /* 确保段落颜色 */
+        }
+        .site-footer a {
+            color: #eee;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .site-footer a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-nav">
+        <div class="nav-container">
+            <div class="nav-left">
+                <img src="#" alt="Vivy" class="logo-img">
+                <h1 class="site-name">江岚的知识分享~</h1>
+            </div>
+            <nav class="nav-right">
+                <a href="#home">首页</a>
+                <a href="#about">关于</a>
+                <a href="#more">更多内容</a>
+            </nav>
+        </div>
+    </header>
+    <!-- 主体内容区域 
+    <main class="main-content">
+
+        <section class="role-dialogue content-section">
+            <h2>“私の使命は、歌で、みんなを幸せにすること”</h2>
+            <p>“我的使命是用歌声带给大家幸福”</p>
+        </section>
+      
+        <section class="role-experience content-section">
+            <h2>角色经历</h2>
+            <h2>「正确的历史」百年后的薇薇</h2>
+            <p>于百年后唯一未失控的AI,由于是最初的自律人型AI,所以被放置于博物馆中展览沉睡,于是逃过了那场劫难。<br>
+               被未来的松本博士选为和码兹莫特一同搭档,防止未来将发生的人类与AI的战争。</p>
+            <h2>「现代」薇薇的百年旅程</h2>
+            <ul>
+                <p>ヴィヴィ(Vivy)是由粉丝雾岛桃佳命名,官方正式的昵称是ディーヴァ(Diva/歌姬)。</p>
+                <li><strong>【百年之旅】的起始：</strong> AI命名法与阻止相川议员被刺杀</li>
+                <li><strong>【群星】之间的间奏：</strong> “我绝对要把这孩子平安送回地球”</li>
+                <li><strong>歌唱我的快乐【爱着你】：</strong>一个人会为了ai死去?</li>
+                <li><strong>用爱奉献的【挽歌】：</strong>见证ai间的殉情...与真相</li>
+                <li><strong>真心实意地【歌唱】：</strong>“——我实现跟你的约定啰，蒂娃。”</li>
+                <li><strong>【终焉】世界变奏曲：</strong>跨越了百年的歌声...</li>
+            </ul>
+            <p>在她漫长的旅途中，一道道难以忘怀的记忆<br>让薇薇成为了名副其实的“人”。<br>
+             这是一个,我既是智能AI ——DIVA,也是改变历史的智能AI——薇薇;<br>
+             还是第一个获得“心”“感情”“灵魂”的仿生人<br>一切过去、现在和未来都在薇薇闪闪发亮的萤石眼中闪烁。</p>
+        </section>
+        
+        <section class="role-profile content-section">
+            <h2>角色资料</h2>
+            <img src="../source/img/vivy1.avif" alt="Vivy的资料图">
+            <p><strong>姓名:</strong> Vivy / Diva (ディーバ)</p>
+            <p><strong>身份:</strong> 史上最初的自律人型AI</p>
+            <p><strong>核心使命:</strong> 「用歌声让大家幸福」</p>
+            <p><strong>生日:</strong> 2060.6.19</p>
+            <p><strong>特征:</strong> 蓝发蓝瞳</p>
+            <p><strong>特点:</strong> 「拥有强大的歌唱能力和学习能力」</br>「随着经历的增加,其情感和认知也逐渐发展」</br>「重视约定的人类型AI歌姬」</p>
+        </section>
+        
+        <section class="role-gallery content-section">
+            <h2>角色画廊</h2>
+            <div class="gallery-images">
+                <img src="../source/img/vivysing.avif" alt="Vivy 演唱">
+                <img src="../source/img/vivy&ma.avif" alt="Vivy 与 Matsumoto">
+                <img src="../source/img/vivy2.avif" alt="Vivy 剧照">
+                <img src="../source/img/vivyshow.avif" alt="Vivy 角色概念图">
+                <img src="../source/img/vivyfight.avif" alt="Vivy 战斗姿态">
+                <img src="../source/img/vivy3.avif" alt="Vivy 战斗姿态">
+        </section>
+    -->
+        <!--文末文本-->
+        <section class="role-text content-section">
+            <h2>
+             萤石眼之歌是献给所有怀揣梦想和愿望的仿生人和人类之歌谣<br>也是过去的谢幕曲、壮烈的进行曲、未来的开幕曲</h2>
+        </section>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.content-section');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    // 延迟添加 'fade-and-slide-in' 类，以确保过渡动画生效
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('fade-and-slide-in');
+                        }, 50); 
+                    }
+                });
+            }, {
+                threshold: 0.1 // 当元素可见10%时触发
+            });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+    <div class="footer-placeholder"></div>
+    <footer class="site-footer">
+        <p>&copy; It would be best if this page is useful to you.</p>
+        <p>Created with <span style="color: #FF6B6B;">❤</span> by jianglan. | <a href="#">联系我们</a> </p>
+    </footer>
+</body>
+</html>
